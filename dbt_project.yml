@@ -1,0 +1,36 @@
+name: 'ember_co'
+version: '1.0.0'
+config-version: 2
+
+profile: 'ember_co'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  ember_co:
+    staging:
+      +materialized: view
+      +schema: STAGING
+    marts:
+      dimensions:
+        +materialized: table
+        +schema: MARTS
+      facts:
+        +materialized: table
+        +schema: MARTS
+      aggregates:
+        +materialized: table
+        +schema: MARTS
+
+seeds:
+  ember_co:
+    +schema: SEEDS
