@@ -140,7 +140,7 @@ Connect Looker Studio to Snowflake using the native connector, pointing at the `
 
 ## Live Dashboard
 
-🔗 [View the Ember & Co Looker Studio Dashboard](#) ← *link added after build*
+🔗 [View the Ember & Co Looker Studio Dashboard](https://datastudio.google.com/reporting/e99f36ac-a4b3-4f94-848d-a989f78d3d6a) ← *link added after build*
 
 ![Dashboard Preview](dashboard/preview.png) ← *screenshot added after build*
 
