@@ -47,8 +47,8 @@ weekly_revenue AS (
         ROUND(SUM(ADJUSTED_REVENUE), 2)     AS ADJUSTED_REVENUE,
 
         -- Rates
-        ROUND(SUM(IS_RETURNED) / COUNT(*) * 100, 1)     AS RETURN_RATE_PCT,
-        ROUND(SUM(IS_DISCOUNTED) / COUNT(*) * 100, 1)   AS DISCOUNT_RATE_PCT,
+        ROUND(SUM(IS_RETURNED) / COUNT(*), 1)     AS RETURN_RATE_PCT,
+        ROUND(SUM(IS_DISCOUNTED) / COUNT(*), 1)   AS DISCOUNT_RATE_PCT,
 
         -- Average order values
         ROUND(AVG(GROSS_REVENUE), 2)        AS AVG_ORDER_VALUE,
