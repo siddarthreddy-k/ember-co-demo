@@ -18,8 +18,11 @@ Usage:
 import os
 import csv
 import sys
+from dotenv import load_dotenv
 import snowflake.connector
 from pathlib import Path
+
+load_dotenv()
 
 # ── Config from environment variables ─────────────────────────────────────────
 

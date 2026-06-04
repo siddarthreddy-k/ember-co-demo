@@ -67,8 +67,8 @@ cohort_ltv AS (
         SUM(IS_RETURNED)                                    AS TOTAL_RETURNS,
 
         -- Return rate
-        ROUND(SUM(IS_RETURNED) / NULLIF(COUNT(ORDER_DATE), 0) * 100, 1)
-                                                            AS RETURN_RATE_PCT,
+        ROUND(SUM(IS_RETURNED) / NULLIF(COUNT(ORDER_DATE), 0), 4)
+                                                        AS RETURN_RATE,
 
         -- Cumulative revenue at 30 days
         ROUND(SUM(CASE WHEN DAYS_SINCE_ACQ <= 30

@@ -31,15 +31,12 @@ joined AS (
         s.MONTH,
         s.CHANNEL,
         s.TOTAL_SPEND,
-        COALESCE(c.NEW_CUSTOMERS, 0)            AS NEW_CUSTOMERS,
-
-        -- CAC = spend / new customers acquired
+        COALESCE(c.NEW_CUSTOMERS, 0)        AS NEW_CUSTOMERS,
         CASE
             WHEN COALESCE(c.NEW_CUSTOMERS, 0) > 0
             THEN ROUND(s.TOTAL_SPEND / c.NEW_CUSTOMERS, 2)
             ELSE NULL
-        END                                     AS CAC_GBP
-
+        END                                 AS CAC_GBP
     FROM monthly_spend s
     LEFT JOIN new_customers c
         ON s.MONTH = c.MONTH
@@ -53,19 +50,19 @@ SELECT
     NEW_CUSTOMERS,
     CAC_GBP,
 
-    -- Month over month CAC change
+    -- Month over month CAC change (absolute)
     CAC_GBP - LAG(CAC_GBP) OVER (
         PARTITION BY CHANNEL ORDER BY MONTH
-    )                                           AS CAC_MOM_CHANGE,
+    )                                       AS CAC_MOM_CHANGE,
 
-    -- % change in CAC month over month
+    -- % change as decimal (e.g. 0.102 = 10.2%) — format as % in Looker
     CASE
         WHEN LAG(CAC_GBP) OVER (PARTITION BY CHANNEL ORDER BY MONTH) > 0
         THEN ROUND(
             (CAC_GBP - LAG(CAC_GBP) OVER (PARTITION BY CHANNEL ORDER BY MONTH))
-            / LAG(CAC_GBP) OVER (PARTITION BY CHANNEL ORDER BY MONTH) * 100, 1)
+            / LAG(CAC_GBP) OVER (PARTITION BY CHANNEL ORDER BY MONTH), 4)
         ELSE NULL
-    END                                         AS CAC_MOM_PCT_CHANGE
+    END                                     AS CAC_MOM_PCT_CHANGE
 
 FROM joined
 ORDER BY MONTH, CHANNEL
